@@ -1,0 +1,1 @@
+Move directory /www to /home/my-site
