@@ -1,1 +1,1 @@
-Move directory /www to /home/my-site
+These files must be located in the root project folder with Denwer
