@@ -59,20 +59,45 @@ switch ($mode)
 	break;
 
     case 'register':
-        header('location: /site/registration');
-        exit();
+        if ($user->data['is_registered'] || isset($_REQUEST['not_agreed']))
+        {
+            redirect(append_sid("{$phpbb_root_path}index.$phpEx"));
+        }
+
+        $module->load('ucp', 'register');
+        $module->display($user->lang['REGISTER']);
+        break;
 
 	case 'confirm':
 		$module->load('ucp', 'confirm');
 	break;
 
     case 'login':
-        header('location: /site/login');
-        exit();
+        if ($user->data['is_registered'])
+        {
+            redirect(append_sid("{$phpbb_root_path}index.$phpEx"));
+        }
+
+        login_box(request_var('redirect', "index.$phpEx"));
+        break;
 
     case 'logout':
-        header('location: /site/logout');
-        exit();
+        if ($user->data['user_id'] != ANONYMOUS && isset($_GET['sid']) && !is_array($_GET['sid']) && $_GET['sid'] === $user->session_id)
+        {
+            $user->session_kill();
+            $user->session_begin();
+            $message = $user->lang['LOGOUT_REDIRECT'];
+        }
+        else
+        {
+            $message = ($user->data['user_id'] == ANONYMOUS) ? $user->lang['LOGOUT_REDIRECT'] : $user->lang['LOGOUT_FAILED'];
+        }
+        meta_refresh(3, append_sid("{$phpbb_root_path}index.$phpEx"));
+
+        $message = $message . '<br /><br />' . sprintf($user->lang['RETURN_INDEX'], '<a href="' . append_sid("{$phpbb_root_path}index.$phpEx") . '">', '</a> ');
+        trigger_error($message);
+
+        break;
 
 	case 'terms':
 	case 'privacy':
