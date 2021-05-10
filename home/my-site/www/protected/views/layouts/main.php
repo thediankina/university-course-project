@@ -32,6 +32,7 @@
 				array('label'=>'Главная', 'url'=>array('/site/index')),
 				array('label'=>'Войти', 'url'=>array('/site/login'), 'visible'=>Yii::app()->user->isGuest),
                 array('label'=>'Личный кабинет', 'url'=>array('/request/index'), 'visible'=>!Yii::app()->user->isGuest),
+                array('label'=>'Форум', 'url'=>'/forum/index.php', 'visible'=>!Yii::app()->user->isGuest),  /** @todo Изменить url для форума на правильный */
 				array('label'=>'Выйти ('.Yii::app()->user->name.')', 'url'=>array('/site/logout'), 'visible'=>!Yii::app()->user->isGuest)
 			),
 		)); ?>
@@ -47,9 +48,8 @@
 	<div class="clear"></div>
 
 	<div id="footer">
-		Copyright &copy; <?php echo date('Y'); ?> by My Company.<br/>
-		All Rights Reserved.<br/>
-		<?php echo Yii::powered(); ?>
+		Курсовая работа по проектированию программных систем<br>
+        Галиулина Д.Р.
 	</div><!-- footer -->
 
 </div><!-- page -->
