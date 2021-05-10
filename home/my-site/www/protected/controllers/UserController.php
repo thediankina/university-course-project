@@ -27,19 +27,19 @@ class UserController extends Controller
 	public function accessRules()
 	{
 		return array(
-			array('allow',  // allow all users to perform 'index' and 'view' actions
-				'actions'=>array('index','view'),
+			array('allow',
+				'actions'=>array('create'),
 				'users'=>array('*'),
 			),
-			array('allow', // allow authenticated user to perform 'create' and 'update' actions
-				'actions'=>array('create','update'),
+			array('allow',
+				'actions'=>array('index','view','update'),
 				'users'=>array('@'),
 			),
-			array('allow', // allow admin user to perform 'admin' and 'delete' actions
+			array('allow',
 				'actions'=>array('admin','delete'),
 				'users'=>array('admin'),
 			),
-			array('deny',  // deny all users
+			array('deny',
 				'users'=>array('*'),
 			),
 		);
@@ -71,7 +71,10 @@ class UserController extends Controller
 		{
 			$model->attributes=$_POST['User'];
 			if($model->save())
-				$this->redirect(array('view','id'=>$model->id));
+            {
+                Yii::app()->user->setFlash('create','Вы успешно прошли регистрацию');       /** @TODO Невысплывающее уведомление */
+                $this->refresh();
+            }
 		}
 
 		$this->render('create',array(
@@ -95,7 +98,7 @@ class UserController extends Controller
 		{
 			$model->attributes=$_POST['User'];
 			if($model->save())
-				$this->redirect(array('view','id'=>$model->id));
+				$this->redirect(array('','id'=>$model->id));
 		}
 
 		$this->render('update',array(

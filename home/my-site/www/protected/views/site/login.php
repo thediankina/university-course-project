@@ -41,6 +41,10 @@ $this->breadcrumbs=array(
 		<?php echo $form->error($model,'rememberMe'); ?>
 	</div>
 
+    <div class="link-column">
+        <?php echo CHtml::link('Зарегистрироваться', array('user/create')); ?>
+    </div>
+
 	<div class="row buttons">
 		<?php echo CHtml::submitButton('Войти'); ?>
 	</div>

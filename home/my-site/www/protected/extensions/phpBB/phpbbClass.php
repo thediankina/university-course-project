@@ -128,7 +128,7 @@ class phpbbClass
 		//default user info
 		$user_row = array(
 			"username" => $phpbb_vars["username"],
-			"user_password" => phpbb_hash($phpbb_vars["password"]),
+			"user_password" => phpbb_hash($phpbb_vars["user_password"]),
 			"user_email" => $phpbb_vars["user_email"],
 			"group_id" => !isset($phpbb_vars["group_id"]) ? "2" : $phpbb_vars["group_id"],
 			"user_timezone" => "2.00",

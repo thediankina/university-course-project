@@ -53,9 +53,9 @@ class User extends CActiveRecord
 	{
 		return array(
 			'id' => 'ID',
-			'username' => 'Username',
-			'password' => 'Password',
-			'email' => 'Email',
+			'username' => 'Ğ’Ğ°Ñˆ Ğ»Ğ¾Ğ³Ğ¸Ğ½',
+			'password' => 'Ğ’Ğ°Ñˆ Ğ¿Ğ°Ñ€Ğ¾Ğ»ÑŒ',
+			'email' => 'Ğ’Ğ°Ñˆ email',
 		);
 	}
 
@@ -100,17 +100,17 @@ class User extends CActiveRecord
 
     protected function afterSave() {
         if ($this->isNewRecord) {
-            // Ğåãèñòğàöèÿ íîâîãî ïîëüçîâàòåëÿ íà ôîğóìå
-            // Ëîãèí, ïàğîëü(íå çàõåøèğîâàííûé), email, ID ãğóïïû íà ôîğóìå(ïî óìîë÷àíèş 2-îáû÷íûé ïîëüçîâàòåëü, 5-àäìèíèñòğàòîğ)
-            Yii::app()->phpBB->userAdd($this->login, $this->password, $this->email, 2);
+            // Ğ ĞµĞ³Ğ¸ÑÑ‚Ñ€Ğ°Ñ†Ğ¸Ñ Ğ½Ğ¾Ğ²Ğ¾Ğ³Ğ¾ Ğ¿Ğ¾Ğ»ÑŒĞ·Ğ¾Ğ²Ğ°Ñ‚ĞµĞ»Ñ Ğ½Ğ° Ñ„Ğ¾Ñ€ÑƒĞ¼Ğµ
+            // Ğ›Ğ¾Ğ³Ğ¸Ğ½, Ğ¿Ğ°Ñ€Ğ¾Ğ»ÑŒ(Ğ½Ğµ Ğ·Ğ°Ñ…ĞµÑˆĞ¸Ñ€Ğ¾Ğ²Ğ°Ğ½Ğ½Ñ‹Ğ¹), email, ID Ğ³Ñ€ÑƒĞ¿Ğ¿Ñ‹ Ğ½Ğ° Ñ„Ğ¾Ñ€ÑƒĞ¼Ğµ(Ğ¿Ğ¾ ÑƒĞ¼Ğ¾Ğ»Ñ‡Ğ°Ğ½Ğ¸Ñ 2-Ğ¾Ğ±Ñ‹Ñ‡Ğ½Ñ‹Ğ¹ Ğ¿Ğ¾Ğ»ÑŒĞ·Ğ¾Ğ²Ğ°Ñ‚ĞµĞ»ÑŒ, 5-Ğ°Ğ´Ğ¼Ğ¸Ğ½Ğ¸ÑÑ‚Ñ€Ğ°Ñ‚Ğ¾Ñ€)
+            Yii::app()->phpBB->userAdd($this->username, $this->password, $this->email, 2);
         }
 
         parent::afterSave();
     }
 
     protected function afterDelete() {
-        // Óäàëÿåì ïîëüçîâàòåëÿ ñ ôîğóìà
-        Yii::app()->phpBB->userDelete($this->login);
+        // Ğ£Ğ´Ğ°Ğ»ÑĞµĞ¼ Ğ¿Ğ¾Ğ»ÑŒĞ·Ğ¾Ğ²Ğ°Ñ‚ĞµĞ»Ñ Ñ Ñ„Ğ¾Ñ€ÑƒĞ¼Ğ°
+        Yii::app()->phpBB->userDelete($this->username);
 
         parent::afterDelete();
     }
