@@ -8,6 +8,24 @@
 class UserIdentity extends CUserIdentity
 {
     /**
+     * Check for correct password
+     *
+     * @param string $password The password in plain text
+     * @param string $hash The stored password hash
+     *
+     * @return bool Returns true if the password is correct, false if not.
+     */
+    function phpbb_check_hash($password, $hash)
+    {
+        $itoa64 = './0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+        if (strlen($hash) == 34)
+        {
+            return (self::_hash_crypt_private($password, $hash, $itoa64) === $hash) ? true : false;
+        }
+
+        return (md5($password) === $hash) ? true : false;
+    }
+    /**
      * The crypt function/replacement
      */
     function _hash_crypt_private($password, $setting, &$itoa64)
@@ -66,24 +84,6 @@ class UserIdentity extends CUserIdentity
         $output .= self::_hash_encode64($hash, 16, $itoa64);
 
         return $output;
-    }
-    /**
-     * Check for correct password
-     *
-     * @param string $password The password in plain text
-     * @param string $hash The stored password hash
-     *
-     * @return bool Returns true if the password is correct, false if not.
-     */
-    function phpbb_check_hash($password, $hash)
-    {
-        $itoa64 = './0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
-        if (strlen($hash) == 34)
-        {
-            return (self::_hash_crypt_private($password, $hash, $itoa64) === $hash) ? true : false;
-        }
-
-        return (md5($password) === $hash) ? true : false;
     }
     /**
      * Encode hash

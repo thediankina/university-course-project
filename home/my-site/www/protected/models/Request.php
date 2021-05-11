@@ -6,7 +6,7 @@
  * The followings are the available columns in table 'tbl_request':
  * @property integer $id
  * @property integer $id_category
- * @property string $request_date
+ * @property string $request
  * @property string $info
  * @property string $mail
  * @property integer $phone
@@ -30,11 +30,11 @@ class Request extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('id_category, request_date, info', 'required'),
+			array('id_category, request, info', 'required'),
 			array('id_category, phone', 'numerical', 'integerOnly'=>true),
 			array('mail, status', 'length', 'max'=>20),
 			// The following rule is used by search().
-			array('id, id_category, request_date, info, mail, phone, status', 'safe', 'on'=>'search'),
+			array('id, id_category, request, info, email, phone, status', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -57,7 +57,7 @@ class Request extends CActiveRecord
 		return array(
 			'id' => '№',
 			'id_category' => '№ категории',
-			'request_date' => 'Дата обращения',
+			'request' => 'Дата обращения',
 			'info' => 'Описание',
 			'mail' => 'E-mail',
 			'phone' => 'Телефон',
@@ -84,7 +84,7 @@ class Request extends CActiveRecord
 
 		$criteria->compare('id',$this->id);
 		$criteria->compare('id_category',$this->id_category);
-		$criteria->compare('request_date',$this->request_date,true);
+		$criteria->compare('request',$this->request,true);
 		$criteria->compare('info',$this->info,true);
 		$criteria->compare('mail',$this->mail,true);
 		$criteria->compare('phone',$this->phone);
