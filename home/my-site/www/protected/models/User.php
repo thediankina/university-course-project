@@ -1,22 +1,26 @@
 <?php
 
 /**
- * This is the model class for table "tbl_user".
+ * This is the model class for table "phpbb_users".
  *
- * The followings are the available columns in table 'tbl_user':
- * @property integer $id
+ * The followings are the available columns in table 'phpbb_users':
+ * @property integer $user_id
  * @property string $username
- * @property string $password
- * @property string $email
+ * @property string $user_password
+ * @property string $user_email
  */
 class User extends CActiveRecord
 {
-	/**
+    /**
+     * @var array|CList|int|mixed|null
+     */
+
+    /**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return 'tbl_user';
+		return 'phpbb_users';
 	}
 
 	/**
@@ -27,11 +31,11 @@ class User extends CActiveRecord
 		// NOTE: you should only define rules for those attributes that
 		// will receive user inputs.
 		return array(
-			array('username, password, email', 'required'),
-			array('username, password, email', 'length', 'max'=>128),
+			array('username, user_password, user_email', 'required'),
+			array('username, user_password, user_email', 'length', 'max'=>128),
 			// The following rule is used by search().
 			// @todo Please remove those attributes that should not be searched.
-			array('id, username, password, email', 'safe', 'on'=>'search'),
+			array('user_id, username, user_password, user_email', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -52,10 +56,10 @@ class User extends CActiveRecord
 	public function attributeLabels()
 	{
 		return array(
-			'id' => 'ID',
+			'user_id' => 'ID',
 			'username' => 'Ваш логин',
-			'password' => 'Ваш пароль',
-			'email' => 'Ваш email',
+			'user_password' => 'Ваш пароль',
+			'user_email' => 'Ваш email',
 		);
 	}
 
@@ -77,10 +81,10 @@ class User extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
-		$criteria->compare('id',$this->id);
+		$criteria->compare('id',$this->user_id);
 		$criteria->compare('username',$this->username,true);
-		$criteria->compare('password',$this->password,true);
-		$criteria->compare('email',$this->email,true);
+		$criteria->compare('user_password',$this->user_password,true);
+		$criteria->compare('user_email',$this->user_email,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,
@@ -98,7 +102,7 @@ class User extends CActiveRecord
 		return parent::model($className);
 	}
 
-    protected function afterSave() {
+    /**  protected function afterSave() {
         if ($this->isNewRecord) {
             // Регистрация нового пользователя на форуме
             // Логин, пароль(не захешированный), email, ID группы на форуме(по умолчанию 2-обычный пользователь, 5-администратор)
@@ -113,5 +117,5 @@ class User extends CActiveRecord
         Yii::app()->phpBB->userDelete($this->username);
 
         parent::afterDelete();
-    }
+    }*/
 }

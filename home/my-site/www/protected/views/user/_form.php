@@ -24,15 +24,15 @@
 	</div>
 
 	<div class="row">
-		<?php echo $form->labelEx($model,'password'); ?>
-		<?php echo $form->passwordField($model,'password',array('size'=>60,'maxlength'=>128)); ?>
-		<?php echo $form->error($model,'password'); ?>
+		<?php echo $form->labelEx($model,'user_password'); ?>
+		<?php echo $form->passwordField($model,'user_password',array('size'=>60,'maxlength'=>128)); ?>
+		<?php echo $form->error($model,'user_password'); ?>
 	</div>
 
 	<div class="row">
-		<?php echo $form->labelEx($model,'email'); ?>
-		<?php echo $form->textField($model,'email',array('size'=>60,'maxlength'=>128)); ?>
-		<?php echo $form->error($model,'email'); ?>
+		<?php echo $form->labelEx($model,'user_email'); ?>
+		<?php echo $form->textField($model,'user_email',array('size'=>60,'maxlength'=>128)); ?>
+		<?php echo $form->error($model,'user_email'); ?>
         <p class="hint">
             <kbd><span class="required">*</span></kbd> обязательные поля
         </p>

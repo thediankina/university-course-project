@@ -70,9 +70,9 @@ class UserController extends Controller
 		if(isset($_POST['User']))
 		{
 			$model->attributes=$_POST['User'];
-			if($model->save())
+			if(Yii::app()->phpBB->userAdd($model->username, $model->user_password, $model->user_email, 2))
             {
-                Yii::app()->user->setFlash('create','Вы успешно прошли регистрацию');       /** @TODO Невысплывающее уведомление */
+                Yii::app()->user->setFlash('create','Вы успешно прошли регистрацию');       /** @todo Невысплывающее уведомление */
                 $this->refresh();
             }
 		}
