@@ -6,9 +6,9 @@ $this->breadcrumbs=array(
 	'Заявки',
 );
 
-$this->menu=array(
+/** $this->menu=array(
 	array('label'=>'Управление заявками', 'url'=>array('admin')),
-);
+); */
 ?>
 
 <h1>Список заявок</h1>

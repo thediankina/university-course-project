@@ -7,6 +7,6 @@ $this->breadcrumbs=array(
 );
 ?>
 
-<h1>Зарегистрироваться</h1>
+<h1>Регистрация</h1>
 
 <?php $this->renderPartial('_form', array('model'=>$model)); ?>
