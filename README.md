@@ -1,19 +1,29 @@
 **Project structure**
 
+
 components
+
     - Controller
     - PhpBBWebUser
     - UserIdentity
+
 config
+
     - main
     - database
+
 controllers
+
     - RequestController
     - SiteController
     - UserController
+
 extensions
+
     - phpBB
+
 models
+
     - LoginForm
     - ArticleForm
     - FAQForm
@@ -23,7 +33,9 @@ models
     - Request
     - Specialist
     - User
+
 views
+
     layouts
         - column1
         - column2
