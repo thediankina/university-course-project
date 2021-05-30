@@ -33,6 +33,8 @@
 				array('label'=>'Войти', 'url'=>array('/site/login'), 'visible'=>Yii::app()->user->isGuest),
                 array('label'=>'Личный кабинет', 'url'=>array('/request/index'), 'visible'=>!Yii::app()->user->isGuest),
                 array('label'=>'Форум', 'url'=>'/forum/index.php', 'visible'=>!Yii::app()->user->isGuest),  /** @todo Изменить url для форума на правильный */
+                array('label'=>'Статьи', 'url'=>array('/site/article'), 'visible'=>!Yii::app()->user->isGuest),
+                array('label'=>'FAQ', 'url'=>array('/site/faq'), 'visible'=>!Yii::app()->user->isGuest),
 				array('label'=>'Выйти ('.Yii::app()->user->name.')', 'url'=>array('/site/logout'), 'visible'=>!Yii::app()->user->isGuest)
 			),
 		)); ?>

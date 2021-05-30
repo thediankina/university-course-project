@@ -1,25 +1,32 @@
 <?php
 
 /**
- * This is the model class for table "tbl_request".
+ * This is the model class for table "db_request".
  *
- * The followings are the available columns in table 'tbl_request':
+ * The followings are the available columns in table 'db_request':
  * @property integer $id
+ * @property string $name
  * @property integer $id_category
- * @property string $request
- * @property string $info
- * @property string $mail
+ * @property string $body
+ * @property integer $city
+ * @property string $email
  * @property integer $phone
+ * @property string $comment
  * @property string $status
+ * @property string subject
  */
 class Request extends CActiveRecord
 {
-	/**
+    /**
+     * @var array|mixed|null
+     */
+
+    /**
 	 * @return string the associated database table name
 	 */
 	public function tableName()
 	{
-		return 'tbl_request';
+		return 'db_request';
 	}
 
 	/**
@@ -27,14 +34,12 @@ class Request extends CActiveRecord
 	 */
 	public function rules()
 	{
-		// NOTE: you should only define rules for those attributes that
-		// will receive user inputs.
 		return array(
-			array('id_category, request, info', 'required'),
+			array('name, id_category, body, city, status', 'required'),
 			array('id_category, phone', 'numerical', 'integerOnly'=>true),
-			array('mail, status', 'length', 'max'=>20),
-			// The following rule is used by search().
-			array('id, id_category, request, info, email, phone, status', 'safe', 'on'=>'search'),
+			array('email, status, subject', 'length', 'max'=>20),
+			array('comment', 'length', 'max'=>100),
+			array('id, name, id_category, body, city, email, phone, comment, status', 'safe', 'on'=>'search'),
 		);
 	}
 
@@ -43,9 +48,8 @@ class Request extends CActiveRecord
 	 */
 	public function relations()
 	{
-		// NOTE: you may need to adjust the relation name and the related
-		// class name for the relations automatically generated below.
 		return array(
+            'category' => array(self::HAS_ONE, 'CategoryRequest', array('id' => 'id_category')),
 		);
 	}
 
@@ -56,12 +60,15 @@ class Request extends CActiveRecord
 	{
 		return array(
 			'id' => '№',
+			'name' => 'Имя/Псевдоним',
 			'id_category' => '№ категории',
-			'request' => 'Дата обращения',
-			'info' => 'Описание',
-			'mail' => 'E-mail',
+			'body' => 'Описание',
+            'city' => 'Город',
+			'email' => 'Почта',
 			'phone' => 'Телефон',
+			'comment' => 'Комментарий',
 			'status' => 'Статус',
+            'subject' => 'Назначено',
 		);
 	}
 
@@ -82,13 +89,17 @@ class Request extends CActiveRecord
 
 		$criteria=new CDbCriteria;
 
+        $criteria->with = array('category, specialist');
 		$criteria->compare('id',$this->id);
-		$criteria->compare('id_category',$this->id_category);
-		$criteria->compare('request',$this->request,true);
-		$criteria->compare('info',$this->info,true);
-		$criteria->compare('mail',$this->mail,true);
+        $criteria->compare('name',$this->name);
+		$criteria->compare('"t".id',$this->id_category);
+		$criteria->addCondition('"t".priority');
+        $criteria->compare('city',$this->city);
+		$criteria->compare('body',$this->body,true);
+		$criteria->compare('email',$this->email,true);
 		$criteria->compare('phone',$this->phone);
 		$criteria->compare('status',$this->status,true);
+		$criteria->compare('subject',$this->subject,true);
 
 		return new CActiveDataProvider($this, array(
 			'criteria'=>$criteria,

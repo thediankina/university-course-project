@@ -20,9 +20,8 @@ class UserController extends Controller
 	}
 
 	/**
-	 * Specifies the access control rules.
-	 * This method is used by the 'accessControl' filter.
-	 * @return array access control rules
+	 * Определить права доступа
+	 * @return array
 	 */
 	public function accessRules()
 	{
@@ -57,22 +56,17 @@ class UserController extends Controller
 	}
 
 	/**
-	 * Creates a new model.
-	 * If creation is successful, the browser will be redirected to the 'view' page.
+	 * Регистрация нового пользователя
 	 */
 	public function actionCreate()
 	{
 		$model=new User;
 
-		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
-
 		if(isset($_POST['User']))
 		{
 			$model->attributes=$_POST['User'];
-			if(Yii::app()->phpBB->userAdd($model->username, $model->user_password, $model->user_email, 2))
-            {
-                Yii::app()->user->setFlash('create','Вы успешно прошли регистрацию');       /** @todo Невысплывающее уведомление */
+			if(Yii::app()->phpBB->userAdd($model->username, $model->user_password, $model->user_email)) {
+                Yii::app()->user->setFlash('success','Вы успешно прошли регистрацию');
                 $this->refresh();
             }
 		}
@@ -90,9 +84,6 @@ class UserController extends Controller
 	public function actionUpdate($id)
 	{
 		$model=$this->loadModel($id);
-
-		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
 
 		if(isset($_POST['User']))
 		{
@@ -115,7 +106,6 @@ class UserController extends Controller
 	{
 		$this->loadModel($id)->delete();
 
-		// if AJAX request (triggered by deletion via admin grid view), we should not redirect the browser
 		if(!isset($_GET['ajax']))
 			$this->redirect(isset($_POST['returnUrl']) ? $_POST['returnUrl'] : array('admin'));
 	}

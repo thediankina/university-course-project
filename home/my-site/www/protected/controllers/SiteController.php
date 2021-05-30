@@ -68,6 +68,47 @@ class SiteController extends Controller
 	}
 
 	/**
+    	 * Displays the login page
+    	 */
+    	public function actionFAQ()
+    	{
+    		$model=new FAQForm;
+
+    		if(isset($_POST['FAQForm']))
+    		{
+    			$model->attributes=$_POST['FAQForm'];
+    			// $model->id_author=Yii::app()->user->getId(); Нужна связь через три таблицы
+    			$model->id_author = 1;      // Пока публикации все от администратора
+
+    			if($model->save()) {
+                    Yii::app()->user->setFlash('success', "Вопрос-ответ добавлен");
+                    $this->refresh();
+                }
+            }
+
+    		$this->render('faq',array('model'=>$model));
+    	}
+
+        public function actionArticle()
+        {
+            $model=new ArticleForm;
+
+            if(isset($_POST['ArticleForm']))
+            {
+                $model->attributes=$_POST['ArticleForm'];
+                $model->id_author = 1;      // Пока публикации все от администратора
+                $model->dates_temp = date("Y-m-d");
+                $model->status = 'Опубликовано';    // Статьи администратора публикуются автоматически
+
+                if($model->save()) {
+                    Yii::app()->user->setFlash('success', "Статья добавлена");
+                    $this->refresh();
+                }
+            }
+            $this->render('article',array('model'=>$model));
+        }
+
+	/**
 	 * Logs out the current user and redirect to homepage.
 	 */
 	public function actionLogout()

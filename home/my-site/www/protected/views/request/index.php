@@ -2,6 +2,7 @@
 /* @var $this RequestController */
 /* @var $dataProvider CActiveDataProvider */
 
+$this->pageTitle=Yii::app()->name . ' - Заявки';
 $this->breadcrumbs=array(
 	'Заявки',
 );
@@ -16,13 +17,19 @@ $this->breadcrumbs=array(
 <?php $this->widget('zii.widgets.grid.CGridView', array(
 	'dataProvider'=>$dataProvider,
     'columns'=>array(
-            'request',
-            'info',
-            'mail',
-            'phone',
+            'city',
+            array(
+                    'name' => 'category.category_name',
+                    'value' => function($model) {
+                            return $model->category->category_name;
+                    }
+            ),
+            'category.priority',
             'status',
+            'subject',
             array(
                     'class'=>'CButtonColumn',
+                    'template' => '{update}',
             ),
     ),
 )); ?>

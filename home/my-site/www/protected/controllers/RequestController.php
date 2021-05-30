@@ -60,9 +60,6 @@ class RequestController extends Controller
 	{
 		$model=new Request;
 
-		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
-
 		if(isset($_POST['Request']))
 		{
 			$model->attributes=$_POST['Request'];
@@ -84,12 +81,15 @@ class RequestController extends Controller
 	{
 		$model=$this->loadModel($id);
 
-		// Uncomment the following line if AJAX validation is needed
-		// $this->performAjaxValidation($model);
-
 		if(isset($_POST['Request']))
 		{
 			$model->attributes=$_POST['Request'];
+			if ($model->status === 'В работе') {
+                $model->subject = Yii::app()->user->getName();
+            }
+			else {
+			    $model->subject = '';
+            }
 			if($model->save())
 				$this->redirect(array('view','id'=>$model->id));
 		}
