@@ -9,6 +9,6 @@ $this->breadcrumbs=array(
 );
 ?>
 
-<h1>Обработать заявку №<?php echo $model->id; ?></h1>
+<h2>Обработать заявку №<?php echo $model->id; ?></h2>
 
 <?php $this->renderPartial('_form', array('model'=>$model)); ?>
