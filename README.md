@@ -55,5 +55,3 @@ views
         - create
 
 These files must be located in the root project folder with Denwer
-
-by Galiulina Diana
