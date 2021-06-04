@@ -108,10 +108,14 @@ class ArticleForm extends CActiveRecord
      */
     public function upload()
     {
-        foreach ($this->files as $file) {
-            $file->saveAs(Yii::app()->params['uploadUrl'] .
-                $this->id . '-' . $this->dates_temp . '-' .
-                uniqid() . '.' . $file->getExtensionName());
+        if ($this->files)
+        {
+            foreach ($this->files as $file)
+            {
+                $file->saveAs(Yii::app()->params['uploadUrl'] .
+                    $this->id . '-' . $this->dates_temp . '-' .
+                    uniqid() . '.' . $file->getExtensionName());
+            }
         }
         return true;
     }
