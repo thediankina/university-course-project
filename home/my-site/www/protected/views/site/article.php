@@ -22,11 +22,6 @@ $this->breadcrumbs=array(
             <?php echo Yii::app()->user->getFlash('success'); ?>
         </div>
     <?php endif; ?>
-    <?php if(Yii::app()->user->hasFlash('error')):?>
-        <div class="flash-error">
-            <?php echo Yii::app()->user->getFlash('error'); ?>
-        </div>
-    <?php endif; ?>
 
 	<?php echo $form->errorSummary($model); ?>
 
@@ -42,9 +37,9 @@ $this->breadcrumbs=array(
 		<?php echo $form->error($model,'content'); ?>
 	</div>
     <div class="row">
-        <?php echo $form->labelEx($model,'images'); ?>
-        <?php echo $form->fileField($model, 'images[]', array('multiple'=>true, 'accept'=>'images/*')); ?>
-        <?php echo $form->error($model,'images[]'); ?>
+        <?php echo $form->labelEx($model,'files'); ?>
+        <?php echo $form->fileField($model, 'files[]', array('multiple'=>true, 'accept'=>'file/*')); ?>
+        <?php echo $form->error($model,'files'); ?>
     </div>
     <p class="hint"><kbd><span class="required">*</span></kbd> обязательные поля</p>
 

@@ -1,9 +1,9 @@
 <?php
 
 /**
- * This is the model class for table "db_article".
+ * Модель данных для таблицы "db_article".
  *
- * The followings are the available columns in table 'db_article':
+ * Столбцы таблицы 'db_article':
  * @property integer $id
  * @property string $title
  * @property string $content
@@ -13,20 +13,21 @@
  */
 class ArticleForm extends CActiveRecord
 {
-    /** Загружаемые изображения
+    /** Загружаемые файлы
      * @var CUploadedFile[]
      */
-    public $images;
-	/**
-	 * @return string the associated database table name
+    public $files;
+
+	/** Название таблицы
+	 * @return string
 	 */
 	public function tableName()
 	{
 		return 'db_article';
 	}
 
-	/**
-	 * @return array validation rules for model attributes.
+	/** Правила валидации модели
+	 * @return array
 	 */
 	public function rules()
 	{
@@ -36,13 +37,14 @@ class ArticleForm extends CActiveRecord
 			array('title', 'length', 'max'=>100),
 			array('status', 'length', 'max'=>24),
 			array('dates_temp', 'safe'),
-            array(array('images'), 'file', 'safe'=>true, 'allowEmpty'=>true, 'types' => 'png, jpg, jpeg, gif', 'maxFiles'=>4),
+            array(array('files'), 'file', 'safe'=>true, 'allowEmpty'=>true,
+                'types' => 'png, jpg, pdf, doc, zip', 'maxFiles'=>4, 'maxSize'=>1024*1024*5),
 			array('id, title, content, id_author, dates_temp, status', 'safe', 'on'=>'search'),
 		);
 	}
 
-	/**
-	 * @return array relational rules.
+	/** Правила связей с другими моделями
+	 * @return array
 	 */
 	public function relations()
 	{
@@ -50,8 +52,8 @@ class ArticleForm extends CActiveRecord
 		);
 	}
 
-	/**
-	 * @return array customized attribute labels (name=>label)
+	/** Определения заголовков атрибутов
+	 * @return array
 	 */
 	public function attributeLabels()
 	{
@@ -62,21 +64,12 @@ class ArticleForm extends CActiveRecord
 			'id_author' => 'ID автора',
 			'dates_temp' => 'Дата публикации',
 			'status' => 'Статус',
-            'images' => 'Изображения',
+            'files' => 'Файлы',
 		);
 	}
 
-	/**
-	 * Retrieves a list of models based on the current search/filter conditions.
-	 *
-	 * Typical usecase:
-	 * - Initialize the model fields with values from filter form.
-	 * - Execute this method to get CActiveDataProvider instance which will filter
-	 * models according to data in model fields.
-	 * - Pass data provider to CGridView, CListView or any similar widget.
-	 *
-	 * @return CActiveDataProvider the data provider that can return the models
-	 * based on the search/filter conditions.
+	/** Поиск статей специалистов
+	 * @return CActiveDataProvider
 	 */
 	public function search()
 	{
@@ -95,10 +88,8 @@ class ArticleForm extends CActiveRecord
 	}
 
 	/**
-	 * Returns the static model of the specified AR class.
-	 * Please note that you should have this exact method in all your CActiveRecord descendants!
-	 * @param string $className active record class name.
-	 * @return ArticleForm the static model class
+	 * @param string $className
+	 * @return ArticleForm
 	 */
 	public static function model($className=__CLASS__)
 	{
@@ -106,15 +97,16 @@ class ArticleForm extends CActiveRecord
 	}
 
     /**
-     * Сохраняем изображение с именем в формате id-date_temp-uniqueId.extension
+     * Загрузка изображений в формате id-date_temp-uniqueId.extension
+     * @return boolean
      */
     public function upload()
     {
-        foreach ($this->images as $file) {
+        foreach ($this->files as $file) {
             $file->saveAs(Yii::app()->params['uploadUrl'] .
-                $this->id . '-' .
-                $this->dates_temp . '-' .
+                $this->id . '-' . $this->dates_temp . '-' .
                 uniqid() . '.' . $file->getExtensionName());
         }
+        return true;
     }
 }

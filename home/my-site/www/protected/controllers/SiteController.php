@@ -84,6 +84,8 @@ class SiteController extends Controller
                     Yii::app()->user->setFlash('success', "Вопрос-ответ добавлен");
                     $this->refresh();
                 }
+                else
+                   Yii::app()->user->setFlash('error', "Произошла ошибка");
             }
 
     		$this->render('faq',array('model'=>$model));
@@ -99,15 +101,12 @@ class SiteController extends Controller
                 $model->id_author = 1;      // Пока публикации все от администратора
                 $model->status = 'Опубликовано';    // Статьи администратора публикуются автоматически
                 $model->dates_temp = date("Y-m-d");
-                $model->images=CUploadedFile::getInstances($model,'images');
+                $model->files=CUploadedFile::getInstances($model,'files');
 
                 if ($model->save()) {
                     $model->upload();
                     Yii::app()->user->setFlash('success', "Статья добавлена");
                     $this->refresh();
-                }
-                else {
-                    Yii::app()->user->setFlash('error', "Ошибка загрузки файла");
                 }
             }
             $this->render('article',array('model'=>$model));
