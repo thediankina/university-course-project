@@ -90,8 +90,10 @@ class RequestController extends Controller
 			else {
 			    $model->subject = '';
             }
-			if($model->save())
+			if($model->save() && $model->status === 'В работе')
 				$this->redirect(array('view','id'=>$model->id));
+			else
+                $this->redirect(array('index'));
 		}
 
 		$this->render('update',array(

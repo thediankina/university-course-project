@@ -97,12 +97,17 @@ class SiteController extends Controller
             {
                 $model->attributes=$_POST['ArticleForm'];
                 $model->id_author = 1;      // Пока публикации все от администратора
-                $model->dates_temp = date("Y-m-d");
                 $model->status = 'Опубликовано';    // Статьи администратора публикуются автоматически
+                $model->dates_temp = date("Y-m-d");
+                $model->images=CUploadedFile::getInstances($model,'images');
 
-                if($model->save()) {
+                if ($model->save()) {
+                    $model->upload();
                     Yii::app()->user->setFlash('success', "Статья добавлена");
                     $this->refresh();
+                }
+                else {
+                    Yii::app()->user->setFlash('error', "Ошибка загрузки файла");
                 }
             }
             $this->render('article',array('model'=>$model));

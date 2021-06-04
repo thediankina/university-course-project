@@ -91,6 +91,8 @@ return array(
 	// application-level parameters that can be accessed
 	// using Yii::app()->params['paramName']
 	'params'=>array(
+	    'uploadPath'=>dirname(__FILE__).'/../../images/upload/',
+        'uploadUrl'=>'./images/upload/',
 		// this is used in contact page
 		'adminEmail'=>'webmaster@example.com',
 	),

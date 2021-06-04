@@ -13,6 +13,10 @@
  */
 class ArticleForm extends CActiveRecord
 {
+    /** Загружаемые изображения
+     * @var CUploadedFile[]
+     */
+    public $images;
 	/**
 	 * @return string the associated database table name
 	 */
@@ -32,6 +36,7 @@ class ArticleForm extends CActiveRecord
 			array('title', 'length', 'max'=>100),
 			array('status', 'length', 'max'=>24),
 			array('dates_temp', 'safe'),
+            array(array('images'), 'file', 'safe'=>true, 'allowEmpty'=>true, 'types' => 'png, jpg, jpeg, gif', 'maxFiles'=>4),
 			array('id, title, content, id_author, dates_temp, status', 'safe', 'on'=>'search'),
 		);
 	}
@@ -54,9 +59,10 @@ class ArticleForm extends CActiveRecord
 			'id' => 'ID',
 			'title' => 'Тема',
 			'content' => 'Содержание',
-			'id_author' => 'Id Author',
+			'id_author' => 'ID автора',
 			'dates_temp' => 'Дата публикации',
 			'status' => 'Статус',
+            'images' => 'Изображения',
 		);
 	}
 
@@ -98,4 +104,17 @@ class ArticleForm extends CActiveRecord
 	{
 		return parent::model($className);
 	}
+
+    /**
+     * Сохраняем изображение с именем в формате id-date_temp-uniqueId.extension
+     */
+    public function upload()
+    {
+        foreach ($this->images as $file) {
+            $file->saveAs(Yii::app()->params['uploadUrl'] .
+                $this->id . '-' .
+                $this->dates_temp . '-' .
+                uniqid() . '.' . $file->getExtensionName());
+        }
+    }
 }

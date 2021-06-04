@@ -15,10 +15,16 @@ $this->breadcrumbs=array(
 <?php $form=$this->beginWidget('CActiveForm', array(
 	'id'=>'article-form',
 	'enableAjaxValidation'=>false,
+    'htmlOptions'=>array('enctype'=>'multipart/form-data'),
 )); ?>
     <?php if(Yii::app()->user->hasFlash('success')):?>
         <div class="flash-success">
             <?php echo Yii::app()->user->getFlash('success'); ?>
+        </div>
+    <?php endif; ?>
+    <?php if(Yii::app()->user->hasFlash('error')):?>
+        <div class="flash-error">
+            <?php echo Yii::app()->user->getFlash('error'); ?>
         </div>
     <?php endif; ?>
 
@@ -26,22 +32,21 @@ $this->breadcrumbs=array(
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'title'); ?>
-        <?php echo $form->textArea($model,'title', array('rows'=>1, 'cols'=>30)); ?>
+        <?php echo $form->textArea($model,'title', array('rows'=>1, 'cols'=>40)); ?>
 		<?php echo $form->error($model,'title'); ?>
 	</div>
 
 	<div class="row">
 		<?php echo $form->labelEx($model,'content'); ?>
-        <?php echo $form->textArea($model,'content', array('rows'=>4, 'cols'=>50)); ?>
+        <?php echo $form->textArea($model,'content', array('rows'=>6, 'cols'=>60)); ?>
 		<?php echo $form->error($model,'content'); ?>
-        <div>
-            <?php echo CHtml::button('Прикрепить файл'); ?>
-        </div>
 	</div>
-    <p class="hint">
-        <kbd><span class="required">*</span></kbd> обязательные поля
-    </p>
-
+    <div class="row">
+        <?php echo $form->labelEx($model,'images'); ?>
+        <?php echo $form->fileField($model, 'images[]', array('multiple'=>true, 'accept'=>'images/*')); ?>
+        <?php echo $form->error($model,'images[]'); ?>
+    </div>
+    <p class="hint"><kbd><span class="required">*</span></kbd> обязательные поля</p>
 
 	<div class="row buttons">
 		<?php echo CHtml::submitButton('Готово'); ?>
