@@ -13,12 +13,14 @@
  */
 class ArticleForm extends CActiveRecord
 {
-    /** Загружаемые файлы
+    /**
+     * Загружаемые файлы
      * @var CUploadedFile[]
      */
     public $files;
 
-	/** Название таблицы
+	/**
+     * Название таблицы
 	 * @return string
 	 */
 	public function tableName()
@@ -26,7 +28,8 @@ class ArticleForm extends CActiveRecord
 		return 'db_article';
 	}
 
-	/** Правила валидации модели
+	/**
+     * Правила валидации модели
 	 * @return array
 	 */
 	public function rules()
@@ -43,7 +46,8 @@ class ArticleForm extends CActiveRecord
 		);
 	}
 
-	/** Правила связей с другими моделями
+	/**
+     * Правила связей с другими моделями
 	 * @return array
 	 */
 	public function relations()
@@ -52,7 +56,8 @@ class ArticleForm extends CActiveRecord
 		);
 	}
 
-	/** Определения заголовков атрибутов
+	/**
+     * Определения заголовков атрибутов
 	 * @return array
 	 */
 	public function attributeLabels()
@@ -68,7 +73,8 @@ class ArticleForm extends CActiveRecord
 		);
 	}
 
-	/** Поиск статей специалистов
+	/**
+     * Поиск статей специалистов
 	 * @return CActiveDataProvider
 	 */
 	public function search()

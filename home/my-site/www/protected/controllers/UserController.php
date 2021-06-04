@@ -3,24 +3,24 @@
 class UserController extends Controller
 {
 	/**
-	 * @var string the default layout for the views. Defaults to '//layouts/column2', meaning
-	 * using two-column layout. See 'protected/views/layouts/column2.php'.
+     * Стандартный макет для представлений
+	 * @var string
 	 */
 	public $layout='//layouts/column2';
 
 	/**
-	 * @return array action filters
+	 * @return array
 	 */
 	public function filters()
 	{
 		return array(
-			'accessControl', // perform access control for CRUD operations
-			'postOnly + delete', // we only allow deletion via POST request
+			'accessControl',
+			'postOnly + delete',
 		);
 	}
 
 	/**
-	 * Определить права доступа
+	 * Правила доступа
 	 * @return array
 	 */
 	public function accessRules()
@@ -44,10 +44,13 @@ class UserController extends Controller
 		);
 	}
 
-	/**
-	 * Displays a particular model.
-	 * @param integer $id the ID of the model to be displayed
-	 */
+    /**
+     * Данные о пользователе (в разработке)
+     *
+     * Здесь будут отображаться все заявки, которые принял специалист
+     * @param integer $id
+     * @throws CHttpException
+     */
 	public function actionView($id)
 	{
 		$this->render('view',array(
@@ -76,11 +79,11 @@ class UserController extends Controller
 		));
 	}
 
-	/**
-	 * Updates a particular model.
-	 * If update is successful, the browser will be redirected to the 'view' page.
-	 * @param integer $id the ID of the model to be updated
-	 */
+    /**
+     * Обновление данных о пользователе (в разработке)
+     * @param integer $id
+     * @throws CHttpException
+     */
 	public function actionUpdate($id)
 	{
 		$model=$this->loadModel($id);
@@ -97,11 +100,12 @@ class UserController extends Controller
 		));
 	}
 
-	/**
-	 * Deletes a particular model.
-	 * If deletion is successful, the browser will be redirected to the 'admin' page.
-	 * @param integer $id the ID of the model to be deleted
-	 */
+    /**
+     * Удаление пользователя
+     * @param integer $id
+     * @throws CDbException
+     * @throws CHttpException
+     */
 	public function actionDelete($id)
 	{
 		$this->loadModel($id)->delete();
@@ -111,7 +115,7 @@ class UserController extends Controller
 	}
 
 	/**
-	 * Lists all models.
+	 * Список всех пользователей (в разработке)
 	 */
 	public function actionIndex()
 	{
@@ -122,12 +126,12 @@ class UserController extends Controller
 	}
 
 	/**
-	 * Manages all models.
+	 * Панель администратора (в разработке)
 	 */
 	public function actionAdmin()
 	{
 		$model=new User('search');
-		$model->unsetAttributes();  // clear any default values
+		$model->unsetAttributes();
 		if(isset($_GET['User']))
 			$model->attributes=$_GET['User'];
 
@@ -137,23 +141,22 @@ class UserController extends Controller
 	}
 
 	/**
-	 * Returns the data model based on the primary key given in the GET variable.
-	 * If the data model is not found, an HTTP exception will be raised.
-	 * @param integer $id the ID of the model to be loaded
-	 * @return User the loaded model
+	 * Возвращает модель данных, основываясь на первичном ключе, полученном из GET запроса
+	 * @param integer $id
+	 * @return User
 	 * @throws CHttpException
 	 */
 	public function loadModel($id)
 	{
 		$model=User::model()->findByPk($id);
 		if($model===null)
-			throw new CHttpException(404,'The requested page does not exist.');
+			throw new CHttpException(404,'Запрашиваемая страница не существует');
 		return $model;
 	}
 
 	/**
-	 * Performs the AJAX validation.
-	 * @param User $model the model to be validated
+	 * Представляет AJAX валидацию (в разработке)
+	 * @param User $model
 	 */
 	protected function performAjaxValidation($model)
 	{
